@@ -37,8 +37,6 @@ x-superset-volumes: &superset-volumes
 x-common-build: &common-build
   context: .
   target: ${SUPERSET_BUILD_TARGET:-dev} # can use `dev` (default) or `lean`
-  cache_from:
-    - apache/superset-cache:3.10-slim-trixie
   args:
     DEV_MODE: "true"
     INCLUDE_CHROMIUM: ${INCLUDE_CHROMIUM:-false}
@@ -211,6 +209,7 @@ services:
     # Bump memory limit if processing selenium / thumbnails on superset-worker
     # mem_limit: 2038m
     # mem_reservation: 128M
+
 
   superset-worker-beat:
     build:

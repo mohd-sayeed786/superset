@@ -39,6 +39,7 @@ import setupCodeOverrides from 'src/setup/setupCodeOverrides';
 import { logEvent } from 'src/logger/actions';
 import { store } from 'src/views/store';
 import ExtensionsStartup from 'src/extensions/ExtensionsStartup';
+import { AICopilot } from 'src/components/AICopilot';
 import { RootContextProviders } from './RootContextProviders';
 import { ScrollToTop } from './ScrollToTop';
 
@@ -106,6 +107,7 @@ const App = () => (
         </Switch>
       </ExtensionsStartup>
       <ToastContainer />
+      <AICopilot />
     </RootContextProviders>
   </Router>
 );

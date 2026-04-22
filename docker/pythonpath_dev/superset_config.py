@@ -68,6 +68,9 @@ REDIS_RESULTS_DB = os.getenv("REDIS_RESULTS_DB", "1")
 
 RESULTS_BACKEND = FileSystemCache("/app/superset_home/sqllab")
 
+GROQ_API_KEY = "insert_key_here"
+MCP_SERVER_URL = "http://localhost:5008"
+
 CACHE_CONFIG = {
     "CACHE_TYPE": "RedisCache",
     "CACHE_DEFAULT_TIMEOUT": 300,
@@ -142,3 +145,7 @@ try:
     )
 except ImportError:
     logger.info("Using default Docker config...")
+
+# MCP Service: development username for local testing
+MCP_DEV_USERNAME = os.environ.get("MCP_DEV_USERNAME", "admin")
+

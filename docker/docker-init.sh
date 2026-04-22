@@ -75,7 +75,45 @@ if [ "$SUPERSET_LOAD_EXAMPLES" = "yes" ]; then
     if [ "$CYPRESS_CONFIG" == "true" ]; then
         superset load_examples --load-test-data
     else
-        superset load_examples
+        # Load a curated subset of examples for faster startup.
+        # Set SUPERSET_LOAD_ALL_EXAMPLES=yes to load everything instead.
+        if [ "$SUPERSET_LOAD_ALL_EXAMPLES" = "yes" ]; then
+            superset load_examples
+        else
+            python -c "
+from superset.app import create_app
+app = create_app()
+with app.app_context():
+    from superset.examples.data_loading import (
+        load_css_templates,
+        load_examples_from_configs,
+        discover_datasets,
+    )
+    import superset.utils.database as database_utils
+    database_utils.get_example_database()
+    load_css_templates()
+
+    # Load only these example datasets
+    SELECTED = [
+        'load_world_health',
+        'load_sales_dashboard',
+        'load_usa_births_names',
+        'load_international_sales',
+    ]
+    loaders = discover_datasets()
+    for name in SELECTED:
+        if name in loaders:
+            print(f'Loading {name}...')
+            try:
+                loaders[name]()
+            except Exception as e:
+                print(f'Warning: {name} failed: {e}')
+
+    # Load YAML-config-based examples (charts/dashboards)
+    load_examples_from_configs(False, False)
+    print('Selected examples loaded successfully.')
+"
+        fi
     fi
     echo_step "4" "Complete" "Loading examples"
 fi

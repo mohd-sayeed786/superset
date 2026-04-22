@@ -273,6 +273,11 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
         appbuilder.add_api(SqlLabPermalinkRestApi)
         appbuilder.add_api(LogRestApi)
 
+        # AI Copilot API
+        from superset.ai_copilot.api import AICopilotRestApi
+
+        appbuilder.add_api(AICopilotRestApi)
+
         if feature_flag_manager.is_feature_enabled("ENABLE_EXTENSIONS"):
             from superset.extensions.api import ExtensionsRestApi
 

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "superset": {
+      "command": "docker",
+      "args": [
+        "exec", "-i", "hackathon-superset-1",
+        "python", "-m", "superset.mcp_service"
+      ],
+      "env": {
+        "SUPERSET_URL": "http://localhost:8088",
+        "SUPERSET_USERNAME": "admin",
+        "SUPERSET_PASSWORD": "admin"
+      }
+    }
+  }
+}
