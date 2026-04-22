@@ -68,7 +68,7 @@ REDIS_RESULTS_DB = os.getenv("REDIS_RESULTS_DB", "1")
 
 RESULTS_BACKEND = FileSystemCache("/app/superset_home/sqllab")
 
-GROQ_API_KEY = "insert_key_here"
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 MCP_SERVER_URL = "http://localhost:5008"
 
 CACHE_CONFIG = {
